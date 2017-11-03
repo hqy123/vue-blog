@@ -16,10 +16,10 @@
 						<h2>
 							<router-link :to="'page/'+item.pk_article_id">{{item.title}}</router-link>
 						</h2>
-						<p>
+						<!-- <p>
 							<span class="glyphicon glyphicon-star">{{item.page_view}}</span>
 							<span class="glyphicon glyphicon-calendar">{{item.published_time | timeFormat}}</span>
-						</p>
+						</p> -->
 						<div class="title-desc">{{item.content | article }}</div>
 					</li>
 
@@ -41,7 +41,6 @@
 	import filter from '@/util/filter'
 	import util from '@/util/util'
 	
-
 	export default {
 		name: 'home',
 		data () {
@@ -79,10 +78,3 @@
 	}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-.artical-cate li{
-	text-align: center;
-}
-
-</style>

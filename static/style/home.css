@@ -1,7 +1,3 @@
-/**
- * Author:           BeiYuu
- * Contact:          beiyuu.com
- */
 
 /* 重置浏览器CSS */
 html{color:#000;}
@@ -84,13 +80,13 @@ pre ol{margin-left:25px;list-style-type:decimal;}
     background-position:50% 50%;
 }
 .m0 .aside{
-    background-image:url('../img/m0.jpeg');
+    background-image:url('/static/img/m0.jpeg');
 }
 .m1 .aside{
-    background-image:url('../img/m1.jpeg');
+    background-image:url('/static/img/m1.jpeg');
 }
 .m2 .aside{
-    background-image:url('../img/m2.jpeg');
+    background-image:url('/static/img/m2.jpeg');
 }
 .index-content .section { margin-left:30%; padding-top:80px; padding-right:15%; width: 1000px;}
 
@@ -104,7 +100,7 @@ pre ol{margin-left:25px;list-style-type:decimal;}
 .index-content .title-desc {color:#999;font-size:14px;line-height:1.6em;font-family: "KaiTi";text-indent: 28px;}
 
 .index-content .artical-cate { width:70%; margin:0 auto; }
-.index-content .artical-cate li { display:inline-block; *float:left; zoom:1; font-size:18px; width:32%; cursor:pointer; }
+.index-content .artical-cate li { display:inline-block; *float:left; zoom:1; font-size:18px; width:32%; cursor:pointer;text-align: center; }
 .index-content .artical-cate li a,
 .index-content .artical-cate li a:visited { display:inline-block; zoom:1; color:#000; width:100%;font-family: "Times New Roman" }
 .index-content .artical-cate li a:hover { text-decoration:none; }
