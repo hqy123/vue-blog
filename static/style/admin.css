@@ -24,7 +24,9 @@ h2 {
 
 h3, h4 {
   font-weight: 300; }
-
+.fr{
+  float: right;
+}
 .large {
   font-size: 2em; }
 

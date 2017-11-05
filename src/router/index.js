@@ -4,7 +4,7 @@ import home from '@/views/Home'
 import page from '@/views/Page'
 import admin from '@/views/Admin'
 
-import adminIndex from '@/views/admin/index'
+import nodeManage from '@/views/admin/nodeManage'
 
 Vue.use(Router)
 
@@ -26,9 +26,9 @@ export default new Router({
 		component: admin,
 		children: [
 			{
-				path:'/category',
-				name:'admin-index',
-				component: adminIndex
+				path:'/nodeManage',
+				name:'node-manage',
+				component: nodeManage
 			}
 		]
 	},
