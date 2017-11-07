@@ -41,9 +41,9 @@
 				</a>
 				<ul class="children collapse" id="article">
 					<li>
-						<a class="" href="#">
+						<router-link to="/articleManage">
 							<span class="fa fa-arrow-right">&nbsp;</span> 文章管理
-						</a>
+						</router-link>
 					</li>
 					<li>
 						<a class="" href="#">

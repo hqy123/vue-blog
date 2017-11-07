@@ -18,9 +18,25 @@
 						</button>
 					</div>
 					<div class="panel-body">
-						<div class="canvas-wrapper">
-							<canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
-						</div>
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>#序号</th>
+									<th>节点名</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody v-for="(item,index) in nodeList">
+								<tr>
+									<td>{{index+1}}</td>
+									<td>{{item.nodeName}}</td>
+									<td>
+										<a href="#" class="btn btn-danger btn-xs">删除</a>
+										<a href="" class="btn btn-info btn-xs">修改</a>
+									</td>
+								</tr>
+							</tbody>	
+						</table>
 					</div>
 				</div>
 			</div>
@@ -35,7 +51,7 @@
 			<div class="modal-dialog modal-sm" role="document">
 				<div class="modal-content">
 					<div class="input-group">
-						<input type="text" class="form-control" :value="nodeName">
+						<input type="text" class="form-control" v-model="nodeName">
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-primary fr" @click="addNode">add</button>
 						</div>
@@ -55,19 +71,30 @@
 		data () {
 			return {
 				nodeName: "输入节点名",
+				nodeList: [],
 			}	
+		},
+		mounted () {
+			this.getNodeList();
 		},
 		methods:{
 			addNode () {
-				axios.get('http://127.0.0.1:8080/blog/addNode',{params:{nodeName:this.nodeName}}).then(res=>{
-					console.log(res);
+				let params = new URLSearchParams();
+				params.append("nodeName",this.nodeName);
+				axios.post('http://127.0.0.1:8080/blog/addNode',params).then(res=>{
+					this.nodeName="";
+					this.getNodeList();
 				},err=>{
 					console.log(err);
-				});
+				})
 			},
 			getNodeList () {
-
-			}
+				axios.get('http://127.0.0.1:8080/blog/getNodeList').then(res=>{
+					this.nodeList = res.data;
+				},err=>{
+					console.log(err);
+				})
+			}	
 		},
 		components:{
 			adminBread,

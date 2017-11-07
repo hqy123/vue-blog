@@ -1,0 +1,80 @@
+<template>
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		
+		<admin-bread>文章管理</admin-bread>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Article Manage
+						<router-link class="btn btn-info fr" to="/articleEdit">
+							添加文章
+						</router-link>
+					</div>
+					<div class="panel-body">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>#序号</th>
+									<th>标题</th>
+									<th>发布时间</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="(item,index) in articleList">
+									<td>{{index+1}}</td>
+									<td>{{item.title}}</td>
+									<td>{{item.published_time | timeFormat}}</td>
+									<td>
+										<a href="#" class="btn btn-danger btn-xs">删除</a>
+										<a href="" class="btn btn-info btn-xs">修改</a>
+									</td>
+								</tr>
+							</tbody>	
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+
+		<div class="col-sm-12">
+			<p class="back-link">Author by JMercer</a></p>
+		</div>
+
+
+	</div>
+	
+</template>
+<script>
+	import filter from '@/util/filter.js'
+	import adminBread from '@/components/admin/bread'
+	import axios from 'axios'
+	import qs from 'qs'
+
+	export default {
+		name: 'article-manage',
+		data () {
+			return {
+				articleList:[]
+			}	
+		},
+		mounted () {
+			this.getArticleList();
+		},
+		methods:{
+			getArticleList () {
+				axios.get('http://127.0.0.1:8080/blog/getArticleList').then(res=>{
+					this.articleList = res.data;
+				},err=>{
+					console.log(err);
+				})
+			}
+		},
+		components:{
+			adminBread,
+		}
+	}
+</script>
