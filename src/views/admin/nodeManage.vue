@@ -1,13 +1,13 @@
 <template>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-		
+
 		<admin-bread>节点管理</admin-bread>
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header"></h1>
 			</div>
 		</div>
-			
+
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-default">
@@ -31,17 +31,35 @@
 									<td>{{index+1}}</td>
 									<td>{{item.nodeName}}</td>
 									<td>
-										<a href="#" class="btn btn-danger btn-xs">删除</a>
+										<button  class="btn btn-danger btn-xs" @click="delNodeById(item.pk_node_id)">删除</button>
 										<a href="" class="btn btn-info btn-xs">修改</a>
 									</td>
 								</tr>
-							</tbody>	
+							</tbody>
 						</table>
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li>
+                  <a href="javascript:void(0);" aria-label="Previous" @click="getNodeList(prePage)">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li v-for="index in pageTotal" :class="{active: index == pageIndex}">
+                  <a href="javascript:void(0);" @click="getNodeList(index)">{{index}}</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0);" aria-label="Next" @click="getNodeList(nextPage)">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
 					</div>
 				</div>
 			</div>
+
 		</div>
-			
+
 
 		<div class="col-sm-12">
 			<p class="back-link">Author by JMercer</a></p>
@@ -60,7 +78,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 </template>
 <script>
 	import adminBread from '@/components/admin/bread'
@@ -72,7 +90,11 @@
 			return {
 				nodeName: "输入节点名",
 				nodeList: [],
-			}	
+        pageTotal:0,
+        nextPage:0,
+        prePage:0,
+        pageIndex:1
+			}
 		},
 		mounted () {
 			this.getNodeList();
@@ -81,20 +103,38 @@
 			addNode () {
 				let params = new URLSearchParams();
 				params.append("nodeName",this.nodeName);
-				axios.post('http://127.0.0.1:8080/blog/addNode',params).then(res=>{
+				axios.post('api/blog/addNode',params).then(res=>{
 					this.nodeName="";
 					this.getNodeList();
 				},err=>{
 					console.log(err);
 				})
 			},
-			getNodeList () {
-				axios.get('http://127.0.0.1:8080/blog/getNodeList').then(res=>{
-					this.nodeList = res.data;
+			getNodeList (page) {
+			  page = page || 1;
+				axios.get('api/blog/getNodeList',{
+				  params: {
+				    page: page,
+        }
+        }).then(res=>{
+					this.nodeList = res.data.list;
+					this.pageTotal = res.data.pages;
+					this.nextPage = res.data.nextPage;
+					this.prePage = res.data.prePage;
+					this.pageIndex = page;
 				},err=>{
 					console.log(err);
 				})
-			}	
+			},
+      delNodeById (id){
+			  axios.post("api/blog/delNodeById",{
+			    id:id
+        }).then(res=>{
+			    console.log(res);
+        },err=>{
+			    console.log(err);
+        })
+      }
 		},
 		components:{
 			adminBread,

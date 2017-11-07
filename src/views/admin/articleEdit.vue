@@ -1,13 +1,13 @@
 <template>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 article_edit">
-		
+
 		<admin-bread>文章编辑</admin-bread>
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header"></h1>
 			</div>
 		</div>
-			
+
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-default">
@@ -18,16 +18,16 @@
 						</router-link>
 					</div>
 					<div class="panel-body">
-						
+
 						<div class="form-group">
 							<label class="control-label col-md-1">节点：</label>
 							<div class="col-md-2">
 								<select class="form-control" :value="nodeIndex">
 									<option v-for="node in nodeList" :value="node.pk_node_id">{{node.nodeName}}</option>
-									
+
 								</select>
 							</div>
-							
+
 						</div>
 
 						<div class="form-group">
@@ -35,7 +35,7 @@
 							<div class="col-md-10">
 								<input type="text" class="form-control" v-model="title">
 							</div>
-							
+
 						</div>
 						<div id="app">
 							<vue-editor v-model="content"></vue-editor>
@@ -47,7 +47,7 @@
 				</div>
 			</div>
 		</div>
-			
+
 
 		<div class="col-sm-12">
 			<p class="back-link">Author by JMercer</a></p>
@@ -55,13 +55,12 @@
 
 
 	</div>
-	
+
 </template>
 <script>
 	import adminBread from '@/components/admin/bread'
-	import {VueEditor}  from 'vue2-editor'
+//	import {VueEditor}  from 'vue2-editor'
 	import axios from 'axios'
-	import qs from 'qs'
 
 	export default {
 		name: 'admin-index',
@@ -71,7 +70,7 @@
 				content:"",
 				title:"请输入标题",
 				nodeIndex:null,
-			}	
+			}
 		},
 		mounted () {
 			this.getNodeList();
@@ -85,12 +84,13 @@
 					console.log(err);
 				})
 			},
+
 			articleUpload () {
 				let params = new URLSearchParams();
 				params.append('node',this.nodeIndex);
 				params.append('title',this.title);
 				params.append('content',this.content);
-				
+
 				axios.post('http://127.0.0.1:8080/blog/uploadArticle',params).then(res=>{
 					console.log(res);
 				},err=>{
@@ -100,7 +100,7 @@
 		},
 		components:{
 			adminBread,
-			VueEditor
+//			VueEditor
 		}
 	}
 </script>

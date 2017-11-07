@@ -20,11 +20,11 @@
 					</form>
 				</div>
 			</div>
-		</div><!-- /.col-->
-	</div><!-- /.row -->	
+		</div>
+	</div>
 </template>
 <script>
-	
+
 	export default {
 		name:"login-page",
 		data () {

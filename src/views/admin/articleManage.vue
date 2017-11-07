@@ -1,6 +1,6 @@
 <template>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-		
+
 		<admin-bread>文章管理</admin-bread>
 
 		<div class="row">
@@ -32,13 +32,14 @@
 										<a href="" class="btn btn-info btn-xs">修改</a>
 									</td>
 								</tr>
-							</tbody>	
+							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
+
 		</div>
-			
+
 
 		<div class="col-sm-12">
 			<p class="back-link">Author by JMercer</a></p>
@@ -46,20 +47,19 @@
 
 
 	</div>
-	
+
 </template>
 <script>
 	import filter from '@/util/filter.js'
 	import adminBread from '@/components/admin/bread'
 	import axios from 'axios'
-	import qs from 'qs'
 
 	export default {
 		name: 'article-manage',
 		data () {
 			return {
 				articleList:[]
-			}	
+			}
 		},
 		mounted () {
 			this.getArticleList();
