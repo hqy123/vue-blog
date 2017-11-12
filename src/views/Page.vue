@@ -5,9 +5,8 @@
 			<div class="entry">
 				<h1 class="entry-title">{{data.title}}</h1>
 				<p class="entry-date">{{data.published_time | timeFormat}}</p>
-				<blockquote>
-					{{data.content}}
-				</blockquote>
+				<div v-html="data.content">
+				</div>
 			</div>
 
 			<div class="sidenav">
@@ -48,14 +47,14 @@
 		},
 		methods:{
 			articleInit (id) {
-				axios.get('http://127.0.0.1:8080/blog/getOneArticle',{params:{id:this.article_id}}).then(res=>{
+				axios.get('api/blog/getOneArticle',{params:{id:this.article_id}}).then(res=>{
 					this.data = res.data;
 					console.log(res.data)
 				},err=>{
 					console.log(err)
 				})
 			}
-		},	
+		},
 		components:{
 			homeMenu
 		}

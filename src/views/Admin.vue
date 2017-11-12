@@ -4,15 +4,16 @@
 
 		<slider></slider>
 
-		<router-view></router-view>
-</div>
+		<div class="main">
+      <router-view></router-view>
+    </div>
+  </div>
 
 
 </template>
 <script>
 	import slider from '@/components/admin/slider'
 	import adminHeader from '@/components/admin/adminHeader'
-  import '../../static/style/admin.css'
 
 	export default {
 		name:"admin",
@@ -25,3 +26,6 @@
 		}
 	}
 </script>
+<style scoped>
+  @import "../assets/style/admin.css";
+</style>

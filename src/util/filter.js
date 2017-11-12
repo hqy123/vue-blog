@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 Vue.filter("article",function(val){
-	return val.substring(0,100)+"......";
+	return val.replace(/<[^>]+>/g,'').substring(0,100)+"......";
 })
 
 Vue.filter("timeFormat",function(val){
@@ -13,6 +13,6 @@ Vue.filter("timeFormat",function(val){
   // let H = time.getHours();
   // let M = time.getMinutes();
   // let S = time.getSeconds();
-	
+
 	 return  `${y}-${m}-${d}`;
 })

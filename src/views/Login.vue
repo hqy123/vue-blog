@@ -16,7 +16,7 @@
 								<input name="remember" type="checkbox" value="Remember Me">Remember Me
 							</label>
 						</div>
-						<button class="btn btn-primary">Login</button>
+						<button class="btn btn-primary" @click="login">Login</button>
 					</form>
 				</div>
 			</div>
@@ -24,6 +24,7 @@
 	</div>
 </template>
 <script>
+  import axios from 'axios'
 
 	export default {
 		name:"login-page",
@@ -35,7 +36,14 @@
 		},
 		methods:{
 			login(){
-
+        axios.post('api/blog/adminLogin',{
+          username:this.username,
+          password:this.password
+        }).then(res=>{
+          this.$store.commit('login',res.data);
+        },err=>{
+          console.log(err);
+        })
 			}
 		}
 	}

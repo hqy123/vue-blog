@@ -22,7 +22,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-1">节点：</label>
 							<div class="col-md-2">
-								<select class="form-control" :value="nodeIndex">
+								<select class="form-control" v-model="nodeIndex">
 									<option v-for="node in nodeList" :value="node.pk_node_id">{{node.nodeName}}</option>
 
 								</select>
@@ -47,11 +47,9 @@
 				</div>
 			</div>
 		</div>
+    <admin-footer></admin-footer>
 
 
-		<div class="col-sm-12">
-			<p class="back-link">Author by JMercer</a></p>
-		</div>
 
 
 	</div>
@@ -59,7 +57,8 @@
 </template>
 <script>
 	import adminBread from '@/components/admin/bread'
-//	import {VueEditor}  from 'vue2-editor'
+  import adminFooter from '@/components/admin/adminFooter'
+	import {VueEditor}  from 'vue2-editor'
 	import axios from 'axios'
 
 	export default {
@@ -77,7 +76,7 @@
 		},
 		methods:{
 			getNodeList () {
-				axios.get('http://127.0.0.1:8080/blog/getNodeList').then(res=>{
+				axios.get('api/blog/getHomeNode').then(res=>{
 					this.nodeList = res.data;
 					this.nodeIndex = res.data[0].pk_node_id
 				},err=>{
@@ -86,13 +85,18 @@
 			},
 
 			articleUpload () {
-				let params = new URLSearchParams();
-				params.append('node',this.nodeIndex);
-				params.append('title',this.title);
-				params.append('content',this.content);
+//				let params = new URLSearchParams();
+//				params.append('node',this.nodeIndex);
+//				params.append('title',this.title);
+//				params.append('content',this.content);
+        let params = {
+          node:this.nodeIndex,
+          title:this.title,
+          content:this.content
+        }
 
-				axios.post('http://127.0.0.1:8080/blog/uploadArticle',params).then(res=>{
-					console.log(res);
+				axios.post('api/blog/uploadArticle',params).then(res=>{
+				  this.$router.push('articleManage');
 				},err=>{
 					consoe.log(err)
 				})
@@ -100,7 +104,8 @@
 		},
 		components:{
 			adminBread,
-//			VueEditor
+      adminFooter,
+			VueEditor
 		}
 	}
 </script>

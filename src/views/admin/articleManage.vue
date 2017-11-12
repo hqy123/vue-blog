@@ -28,7 +28,7 @@
 									<td>{{item.title}}</td>
 									<td>{{item.published_time | timeFormat}}</td>
 									<td>
-										<a href="#" class="btn btn-danger btn-xs">删除</a>
+										<a href="javascript:void(0);" class="btn btn-danger btn-xs" @click="delArticleById(item.pk_article_id)">删除</a>
 										<a href="" class="btn btn-info btn-xs">修改</a>
 									</td>
 								</tr>
@@ -40,19 +40,17 @@
 
 		</div>
 
-
-		<div class="col-sm-12">
-			<p class="back-link">Author by JMercer</a></p>
-		</div>
+    <admin-footer></admin-footer>
 
 
 	</div>
 
 </template>
 <script>
-	import filter from '@/util/filter.js'
+	import filter from '@/util/filter'
 	import adminBread from '@/components/admin/bread'
-	import axios from 'axios'
+  import adminFooter from '@/components/admin/adminFooter'
+  import axios from 'axios'
 
 	export default {
 		name: 'article-manage',
@@ -66,15 +64,24 @@
 		},
 		methods:{
 			getArticleList () {
-				axios.get('http://127.0.0.1:8080/blog/getArticleList').then(res=>{
+				axios.get('api/blog/getArticleList').then(res=>{
 					this.articleList = res.data;
 				},err=>{
 					console.log(err);
 				})
-			}
+			},
+      delArticleById(aid){
+			  axios.post('api/blog/delArticleById',{id:aid}).then(res=>{
+			    this.getArticleList();
+			    console.log(res);
+        },err=>{
+			    console.log(err);
+        })
+      }
 		},
 		components:{
 			adminBread,
+      adminFooter
 		}
 	}
 </script>

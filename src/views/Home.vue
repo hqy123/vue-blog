@@ -1,11 +1,12 @@
 <template>
-  <div style="overflow: hidden">
+  <div style="overflow: hidden;background:#ffffff">
     <home-menu></home-menu>
 
     <div class="index-content m1">
       <div class="section">
         <ul class="artical-cate">
-          <li v-for="(item,index) in tags" :class="{on:index == tag_index}"><a href="javascrit:viod(0);"  @click="getArticles(index)"><span>{{item}}</span></a>
+          <li v-for="item in tags" :class="{on:item.pk_node_id == tag_index}">
+              <a href="javascript:void(0);"  @click="getData(item.pk_node_id)"><span>{{item.nodeName}}</span></a>
           </li>
         </ul>
 
@@ -17,10 +18,10 @@
             <h2>
               <router-link :to="'page/'+item.pk_article_id">{{item.title}}</router-link>
             </h2>
-            <!-- <p>
-                            <span class="glyphicon glyphicon-star">{{item.page_view}}</span>
-                            <span class="glyphicon glyphicon-calendar">{{item.published_time | timeFormat}}</span>
-                        </p> -->
+            <!--<p>-->
+              <!--<span class="glyphicon glyphicon-star">{{item.page_view}}</span>-->
+              <!--<span class="glyphicon glyphicon-calendar">{{item.published_time | timeFormat}}</span>-->
+            <!--</p>-->
             <div class="title-desc">{{item.content | article }}</div>
           </li>
 
@@ -40,27 +41,30 @@
   import footerNav from '@/components/footer'
 
   import filter from '@/util/filter'
-  import util from '@/util/util'
-
   export default {
     name: 'home',
     data() {
       return {
-        tags: ['NodeJS', 'Java', 'PHP'],
+        tags: [],
         tag_index: 0,
         data: [],
       }
     },
     mounted() {
-      this.getData()
+      this.getTags();
     },
     methods: {
-      getArticles(index) {
-        this.tag_index = index;
-        this.getData();
-
+      getTags(){
+        axios.get("api/blog/getHomeNode").then(res=>{
+          this.tags = res.data;
+          this.tag_index = res.data[0].pk_node_id;
+          this.getData(this.tag_index);
+        },err=>{
+          console.log(err);
+        })
       },
-      getData() {
+      getData(index) {
+        this.tag_index = index;
         axios.get("api/blog/getArticles", {
           params: {
             category: this.tag_index
@@ -79,4 +83,7 @@
     }
   }
 </script>
+<style scoped>
 
+  @import "../assets/style/home.css";
+</style>
