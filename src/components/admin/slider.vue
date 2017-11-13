@@ -5,7 +5,7 @@
 				<img src="http://placehold.it/50/30a5ff/fff" class="img-responsive" alt="">
 			</div>
 			<div class="profile-usertitle">
-				<div class="profile-usertitle-name">Username</div>
+				<div class="profile-usertitle-name">{{username}}</div>
 				<div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
 			</div>
 			<div class="clear"></div>
@@ -92,17 +92,33 @@
 				<a href="panels.html"><em class="fa fa-clone">&nbsp;</em> Alerts &amp; Panels</a>
 			</li>
 			-->
-			<li><a href="#"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+			<li><a href="javascript:void(0);" @click="logout"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div>
 </template>
 
 <script>
-	
+  import store from '@/store/store'
+  import type from '@/store/type'
+
 	export default {
 		name:"slider",
 		data(){
-			return {}
-		}
+			return {
+			  username:'',
+      }
+		},
+    mounted(){
+		  this.getUserName();
+    },
+    methods:{
+      getUserName(){
+        this.username = store.state.username
+      },
+      logout(){
+        this.$store.commit(type.LOGOUT);
+        this.$router.push({path:'/'})
+      }
+    }
 	}
 </script>

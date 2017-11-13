@@ -12,7 +12,7 @@ import articleEdit from '@/views/admin/articleEdit'
 
 import store from '@/store/store'
 
-Vue.use(Router)
+Vue.use(Router);
 
 const routes = [
   {
@@ -70,8 +70,7 @@ const router = new Router({routes})
 
 router.beforeEach((to,from,next)=>{
   if (to.meta.requireAuth) {
-
-    if (store.state.loginToken != '') {
+    if (store.state.loginToken) {
       next();
     }
     else {

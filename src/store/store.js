@@ -1,17 +1,25 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import type from './type'
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state:{
-    loginToken:'',
+    loginToken:null,
+    username:null
   },
-  mutation:{
-    login(state,seesionid){
-      state.loginToken = seesionid
+  mutations:{
+    [type.LOGIN](state,param){
+      state.loginToken = param.seesionid;
+      state.username = param.username;
     },
-  },
-});
+
+    [type.LOGOUT](state){
+      state.loginToken = null;
+      state.username = null;
+    }
+  }
+})
 
 export default store

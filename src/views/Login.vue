@@ -4,7 +4,6 @@
 			<div class="login-panel panel panel-default">
 				<div class="panel-heading">Login</div>
 				<div class="panel-body">
-					<form role="form">
 						<div class="form-group">
 							<input class="form-control" placeholder="Username" v-model="username">
 						</div>
@@ -17,7 +16,6 @@
 							</label>
 						</div>
 						<button class="btn btn-primary" @click="login">Login</button>
-					</form>
 				</div>
 			</div>
 		</div>
@@ -25,6 +23,7 @@
 </template>
 <script>
   import axios from 'axios'
+  import type from '../store/type'
 
 	export default {
 		name:"login-page",
@@ -40,7 +39,9 @@
           username:this.username,
           password:this.password
         }).then(res=>{
-          this.$store.commit('login',res.data);
+          this.$store.commit(type.LOGIN,res.data);
+          let path = this.$route.query.redirect || '/admin';
+          this.$router.push({path});
         },err=>{
           console.log(err);
         })
