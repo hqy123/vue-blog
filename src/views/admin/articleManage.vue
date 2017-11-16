@@ -18,6 +18,7 @@
 								<tr>
 									<th>#序号</th>
 									<th>标题</th>
+                  <th>节点</th>
 									<th>发布时间</th>
 									<th>操作</th>
 								</tr>
@@ -26,6 +27,7 @@
 								<tr v-for="(item,index) in articleList">
 									<td>{{index+1}}</td>
 									<td>{{item.title}}</td>
+                  <td>{{item.n.nodeName}}</td>
 									<td>{{item.published_time | timeFormat}}</td>
 									<td>
 										<a href="javascript:void(0);" class="btn btn-danger btn-xs" @click="delArticleById(item.pk_article_id)">删除</a>
@@ -66,6 +68,7 @@
 			getArticleList () {
 				axios.get('api/blog/getArticleList').then(res=>{
 					this.articleList = res.data;
+					console.log(res.data);
 				},err=>{
 					console.log(err);
 				})

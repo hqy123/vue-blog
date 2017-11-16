@@ -37,33 +37,14 @@
 								</tr>
 							</tbody>
 						</table>
-            <nav aria-label="Page navigation">
-              <ul class="pagination">
-                <li>
-                  <a href="javascript:void(0);" aria-label="Previous" @click="getNodeList(prePage)">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li v-for="index in pageTotal" :class="{active: index == pageIndex}">
-                  <a href="javascript:void(0);" @click="getNodeList(index)">{{index}}</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0);" aria-label="Next" @click="getNodeList(nextPage)">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <admin-pages :page="pageData"></admin-pages>
 					</div>
 				</div>
 			</div>
-
+      <admin-footer></admin-footer>
 		</div>
 
 
-		<div class="col-sm-12">
-			<p class="back-link">Author by JMercer</a></p>
-		</div>
 
 		<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 			<div class="modal-dialog modal-sm" role="document">
@@ -82,6 +63,9 @@
 </template>
 <script>
 	import adminBread from '@/components/admin/bread'
+  import adminPages from '@/components/admin/adminPages'
+  import adminFooter from '@/components/admin/adminFooter'
+
 	import axios from 'axios'
 
 	export default {
@@ -90,10 +74,7 @@
 			return {
 				nodeName: "输入节点名",
 				nodeList: [],
-        pageTotal:0,
-        nextPage:0,
-        prePage:0,
-        pageIndex:1
+        pageData:{},
 			}
 		},
 		mounted () {
@@ -118,10 +99,12 @@
         }
         }).then(res=>{
 					this.nodeList = res.data.list;
-					this.pageTotal = res.data.pages;
-					this.nextPage = res.data.nextPage;
-					this.prePage = res.data.prePage;
-					this.pageIndex = page;
+          this.pageData.pageIndex = page;
+					this.pageData.pageTotal = res.data.pages;
+					this.pageData.nextPage = res.data.nextPage;
+					this.pageData.prePage = res.data.prePage;
+					console.log(this.pageData);
+
 				},err=>{
 					console.log(err);
 				})
@@ -138,6 +121,8 @@
 		},
 		components:{
 			adminBread,
+      adminPages,
+      adminFooter,
 		}
 	}
 </script>
